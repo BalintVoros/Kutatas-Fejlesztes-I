@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="hu">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Admin Felület - TCN Vázsony</title>
+  
+  <link href="/assets/img/favicon.jpg" rel="icon">
+  <link href="/assets/img/apple-touch-icon.jpg" rel="apple-touch-icon">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600;1,700&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Cardo:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+  <link href="/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <link href="/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="/assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="/assets/css/main.css" rel="stylesheet">
+
+  <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js'></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+  <header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="container-fluid d-flex align-items-center justify-content-between">
+      <a href="/" class="logo d-flex align-items-center me-auto me-lg-0">
+        <img src="/assets/img/apple-touch-icon.jpg" alt=""><h1>TCN Vázsony</h1>
+      </a>
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a href="/">Kezdőoldal</a></li>
+          <li><a href="/rolunk/">Rólunk</a></li>
+          <li><a href="/alkalmazas/">Alkalmazás</a></li>
+          <li><a href="/eredmenyek/">Eredmények</a></li>
+          <li><a href="/versenykepek/">Galéria</a></li>
+          <li><a href="/hirek/">Hírek</a></li>
+          <li><a href="/dokumentumok/">Dokumentumok</a></li>
+          <li><a href="/versenyek/">Versenyek</a></li>
+          <li><a href="/kapcsolat/">Kapcsolat</a></li>
+          <li><a href="/foglalas/" class="action-link booking-link">Időpontfoglalás</a></li>
+          <li id="nav-login-button"><a href="#" class="action-link login-link" data-bs-toggle="modal" data-bs-target="#authModal">Bejelentkezés</a></li>
+          <li class="dropdown" id="nav-user-info" style="display: none;"><a href="#"><span>Szia, ...</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+              <li><a href="/profil/">Profilom</a></li>
+              <li><a href="/foglalasaim/">Foglalásaim</a></li>
+              <li><a href="#" id="logout-button">Kijelentkezés</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
+      <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
+    </div>
+  </header>
+
+  <main id="main" data-aos="fade" data-aos-delay="1000">
+    <div class="page-header d-flex align-items-center">
+        <div class="container position-relative">
+            <div class="row d-flex justify-content-center">
+                <div class="col-lg-6 text-center">
+                    <h2>Adminisztrációs Felület</h2>
+                    <p>Itt kezelheted a weboldal dinamikus tartalmait, a foglalásokat, felhasználókat és a híreket.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="loading-spinner" class="text-center my-5">
+        <div class="spinner-border" role="status"><span class="visually-hidden">Betöltés...</span></div>
+    </div>
+    
+    <div id="access-denied" style="display: none;" class="container my-5 text-center">
+        <div class="alert alert-danger">
+            <h4>Hozzáférés megtagadva!</h4>
+            <p>Nincs jogosultságod ennek az oldalnak a megtekintéséhez. Kérjük, jelentkezz be adminisztrátori fiókkal.</p>
+        </div>
+    </div>
+
+    <div class="container admin-container py-5" id="admin-content" style="display: none;">
+
+        <ul class="nav nav-tabs" id="adminTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="dashboard-tab" data-bs-toggle="tab" data-bs-target="#dashboard-pane" type="button" role="tab">Dashboard</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="bookings-tab" data-bs-toggle="tab" data-bs-target="#bookings-pane" type="button" role="tab">Foglalások</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="users-tab" data-bs-toggle="tab" data-bs-target="#users-pane" type="button" role="tab">Felhasználók</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="matches-tab" data-bs-toggle="tab" data-bs-target="#matches-pane" type="button" role="tab">Eredmények Jóváhagyása</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="content-tab" data-bs-toggle="tab" data-bs-target="#content-pane" type="button" role="tab">Tartalomkezelés</button>
+            </li>
+        </ul>
+
+        <div class="tab-content pt-4" id="adminTabContent">
+            
+            <div class="tab-pane fade show active" id="dashboard-pane" role="tabpanel">
+                 <div class="row">
+                    <div class="col-lg-8 mb-4">
+                        <div class="card h-100">
+                            <div class="card-header"><h5 class="card-title mb-0">Heti foglalások megoszlása</h5></div>
+                            <div class="card-body"><canvas id="bookingsChart"></canvas></div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 mb-4">
+                        <div class="card h-100">
+                            <div class="card-header"><h5 class="card-title mb-0">Gyors statisztikák</h5></div>
+                            <div class="card-body" id="quick-stats-container"><p>Betöltés...</p></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="bookings-pane" role="tabpanel">
+                <div class="card">
+                    <div class="card-header"><h5 class="card-title mb-0">Foglalási Naptár</h5></div>
+                    <div class="card-body">
+                        <div id="admin-calendar"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="users-pane" role="tabpanel">
+                <div class="card">
+                    <div class="card-header"><h5 class="card-title mb-0">Felhasználók</h5></div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover">
+                                <thead><tr><th>E-mail</th><th>Név</th><th>Klubtag</th><th>Admin</th></tr></thead>
+                                <tbody id="users-table-body"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="matches-pane" role="tabpanel">
+                <div class="card border-info mb-4">
+                    <div class="card-header bg-info text-dark fw-bold">
+                        <h5 class="card-title mb-0"><i class="bi bi-hourglass-split"></i> Függőben lévő meccseredmények</h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="text-muted small">Ezeket a meccseket a játékosok rögzítették, de még nem számítanak bele a statisztikába. Hagyd jóvá őket, ha az eredmény valós!</p>
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Dátum</th>
+                                        <th>Játékos 1 (Beküldő)</th>
+                                        <th>Játékos 2 (Ellenfél)</th>
+                                        <th class="text-center">Szettarány</th>
+                                        <th class="text-center">Gémek (Részletek)</th>
+                                        <th class="text-center">Műveletek</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="pending-matches-table-body">
+                                    <tr><td colspan="6" class="text-center">Betöltés...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header"><h5 class="card-title mb-0">Korábban jóváhagyott meccsek (Utolsó 20)</h5></div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-sm text-muted">
+                                <thead>
+                                    <tr>
+                                        <th>Dátum</th>
+                                        <th>Győztes</th>
+                                        <th>Vesztes</th>
+                                        <th>Szett</th>
+                                        <th>Részletek</th>
+                                        <th>Művelet</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="approved-matches-table-body">
+                                    <tr><td colspan="6" class="text-center">Betöltés...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="content-pane" role="tabpanel">
+                <div class="row">
+                    <div class="col-lg-6 mb-4">
+                        <div class="card h-100">
+                            <div class="card-header"><h5 class="card-title mb-0">Hírek Kezelése</h5></div>
+                            <div class="card-body">
+                                <form id="add-news-form">
+                                    <div class="mb-3"><label for="news-title" class="form-label">Hír címe</label><input type="text" class="form-control" id="news-title" required></div>
+                                    <div class="mb-3"><label for="news-date" class="form-label">Dátum</label><input type="date" class="form-control" id="news-date" required></div>
+                                    <div class="mb-3"><label for="news-content" class="form-label">Tartalom</label><textarea class="form-control" id="news-content" rows="4" required></textarea></div>
+                                    <button type="submit" class="btn btn-primary w-100">Hír Hozzáadása</button>
+                                </form>
+                                <hr>
+                                <h6>Meglévő hírek</h6>
+                                <div class="table-responsive"><table class="table table-sm"><thead><tr><th>Dátum</th><th>Cím</th><th>Művelet</th></tr></thead><tbody id="news-table-body"></tbody></table></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 mb-4">
+                         <div class="card h-100">
+                            <div class="card-header"><h5 class="card-title mb-0">Pálya Állapot Kezelése</h5></div>
+                            <div class="card-body">
+                                <form id="court-status-form">
+                                    <div class="mb-3"><label for="status-nagy-palya" class="form-label">Nagy Pálya</label><select id="status-nagy-palya" class="form-select"><option>Játékra alkalmas</option><option>Játékra alkalmas locsolni kell</option><option>Falazásra alkalmas</option><option>Karbantartás alatt</option><option>Eső miatt nem lehet</option></select></div>
+                                    <div class="mb-3"><label for="status-kis-palya" class="form-label">Kis Pálya</label><select id="status-kis-palya" class="form-select"><option>Játékra alkalmas</option><option>Játékra alkalmas locsolni kell</option><option>Falazásra alkalmas</option><option>Karbantartás alatt</option><option>Eső miatt nem lehet</option></select></div>
+                                    <button type="submit" class="btn btn-primary w-100">Állapotok Mentése</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 mb-4">
+                         <div class="card h-100">
+                            <div class="card-header"><h5 class="card-title mb-0">Galéria Képek Kezelése</h5></div>
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <label for="gallery-image-upload" class="form-label">Új kép feltöltése (több is lehet):</label>
+                                    <input class="form-control" type="file" id="gallery-image-upload" multiple accept="image/jpeg, image/png">
+                                </div>
+                                <div class="progress mt-2" id="gallery-upload-progress" style="display: none;"><div class="progress-bar" role="progressbar" style="width: 0%;">0%</div></div>
+                                <hr>
+                                <h6>Feltöltött képek</h6>
+                                <div id="gallery-admin-container" class="row g-2" style="max-height: 400px; overflow-y: auto;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 mb-4">
+                        <div class="card h-100">
+                            <div class="card-header"><h5 class="card-title mb-0">Dokumentumok Kezelése</h5></div>
+                            <div class="card-body">
+                                <div class="mb-3"><label for="doc-title" class="form-label">Dokumentum címe</label><input type="text" id="doc-title" class="form-control" placeholder="Pl. Belépési Nyilatkozat"></div>
+                                <div class="mb-3"><label for="doc-upload" class="form-label">Fájl kiválasztása:</label><input class="form-control" type="file" id="doc-upload"></div>
+                                <button id="doc-upload-button" class="btn btn-primary w-100">Feltöltés</button>
+                                <div class="progress mt-2" id="doc-upload-progress" style="display: none;"><div class="progress-bar" role="progressbar" style="width: 0%;">0%</div></div>
+                                <hr>
+                                <h6>Feltöltött dokumentumok</h6>
+                                <ul class="list-group" id="documents-admin-container"></ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 mb-4">
+                        <div class="card h-100">
+                            <div class="card-header"><h5 class="card-title mb-0"><i class="bi bi-android2 me-2"></i>Mobilalkalmazás (APK)</h5></div>
+                            <div class="card-body">
+                                <p class="card-text">Itt tudod feltölteni az Android alkalmazás legújabb verzióját. A feltöltés automatikusan felülírja a korábbi verziót.</p>
+                                <div class="input-group">
+                                    <input class="form-control" type="file" id="apk-upload" accept=".apk">
+                                    <button class="btn btn-primary" type="button" id="apk-upload-button">Feltöltés</button>
+                                </div>
+                                <div class="progress mt-3" id="apk-upload-progress" style="display: none;">
+                                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 0%">0%</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="modal fade" id="bookingDetailModal" tabindex="-1">
+        </div>
+
+  </main>
+
+  <footer id="footer" class="footer">
+    <div class="container">
+      <div class="apk-download-container text-center mb-3">
+        <a href="#" id="apk-download-link" style="display: none;" class="btn btn-outline-success btn-sm" download>
+          <i class="bi bi-android2"></i> Android App Letöltése
+        </a>
+      </div>
+      <div class="copyright">
+        &copy; Copyright <strong><span>TCN Vázsony</span></strong>. All Rights Reserved
+      </div>
+      <div class="credits">
+        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+      </div>
+    </div>
+  </footer>
+
+  <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  <div id="preloader"><div class="line"></div></div>
+  
+  <div class="modal fade" id="authModal" tabindex="-1">
+    </div>
+  
+  <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1100">
+    <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="toast-header">
+        <strong class="me-auto" id="toast-title">Értesítés</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+      <div class="toast-body" id="toast-body"></div>
+    </div>
+  </div>
+
+  <script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="/assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="/assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="/assets/vendor/aos/aos.js"></script>
+  <script src="/assets/js/main.js"></script>
+  <script type="module" src="/assets/js/main-script.js"></script>
+  <script src="/assets/js/chat-widget.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,33 @@
+name: Build and Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main 
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v4 
+
+      - name: Create Firebase config file 🤫
+        run: |
+          cp assets/js/firebase-config.template.js assets/js/firebase-config.js
+          sed -i "s/API_KULCS_HELYE/${{ secrets.FIREBASE_API_KEY }}/g" assets/js/firebase-config.js
+
+      
+      - name: Remove .gitignore to ensure all files are published
+        run: rm .gitignore
+      # --------------------------------
+
+      - name: Deploy 🚀
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./
+          cname: tcnv.hu

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="hu">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Regisztráció és App - TCN Vázsony</title>
+  
+  <link href="/assets/img/favicon.jpg" rel="icon">
+  <link href="/assets/img/apple-touch-icon.jpg" rel="apple-touch-icon">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600;1,700&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Cardo:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+  <link href="/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <link href="/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="/assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="/assets/css/main.css" rel="stylesheet">
+</head>
+
+<body>
+ <header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="container-fluid d-flex align-items-center justify-content-between">
+      <a href="/" class="logo d-flex align-items-center me-auto me-lg-0">
+        <img src="/assets/img/apple-touch-icon.jpg" alt=""><h1>TCN Vázsony</h1>
+      </a>
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a href="/">Kezdőoldal</a></li>
+          <li><a href="/rolunk/">Rólunk</a></li>
+          <li><a href="/alkalmazas/" class="active">Alkalmazás</a></li>
+          <li><a href="/eredmenyek/">Eredmények</a></li>
+          <li><a href="/versenykepek/">Galéria</a></li>
+          <li><a href="/hirek/">Hírek</a></li>
+          <li><a href="/dokumentumok/">Dokumentumok</a></li>
+          <li><a href="/versenyek/">Versenyek</a></li>
+          <li><a href="/kapcsolat/">Kapcsolat</a></li>
+          <li><a href="/foglalas/" class="action-link booking-link">Időpontfoglalás</a></li>
+          <li id="nav-login-button"><a href="#" class="action-link login-link" data-bs-toggle="modal" data-bs-target="#authModal">Bejelentkezés</a></li>
+          <li class="dropdown" id="nav-user-info" style="display: none;"><a href="#"><span>Szia, ...</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+              <li><a href="/profil/">Profilom</a></li>
+              <li><a href="/foglalasaim/">Foglalásaim</a></li>
+              <li><a href="#" id="logout-button">Kijelentkezés</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
+      <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
+    </div>
+  </header>
+
+  <main id="main" data-aos="fade" data-aos-delay="1500">
+    <div class="page-header d-flex align-items-center">
+        <div class="container position-relative">
+            <div class="row d-flex justify-content-center">
+                <div class="col-lg-8 text-center">
+                    <h2>Regisztráció és Alkalmazás Letöltése</h2>
+                    <p>Itt minden fontos információt megtalálsz, amire szükséged lehet a weboldal és a mobilalkalmazás használatához.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <section class="container py-5">
+      <div class="row justify-content-center">
+        <div class="col-lg-10">
+
+          <div class="card mb-5">
+            <div class="card-body p-4">
+              <h3 class="card-title">Regisztráció a Weboldalon</h3>
+              <h5 class="text-muted">Miért érdemes regisztrálni?</h5>
+              <p>A regisztrációval teljes hozzáférést kapsz a pályafoglalási rendszerünkhöz. Klubtagjaink azonnal foglalhatnak, míg vendégeink leadhatják foglalási kérelmüket. A fiókodban könnyen áttekintheted jövőbeli és múltbeli foglalásaidat.</p>
+              <h5 class="mt-4 text-muted">A regisztráció menete:</h5>
+              <ol>
+                <li>Kattints a "Bejelentkezés" gombra a menüsor jobb szélén.</li>
+                <li>A felugró ablakban válaszd a "Nincs még fiókod? Regisztrálj!" linket.</li>
+                <li>Add meg a teljes neved, e-mail címed és egy jelszót.</li>
+                <li>Ha rendelkezel érvényes klubtagsággal, ne felejtsd el bepipálni a "Klubtag vagyok" jelölőnégyzetet.</li>
+                <li>Kattints a "Regisztráció" gombra. Kész is vagy!</li>
+              </ol>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-body p-4">
+              <h3 class="card-title">Mobilalkalmazás Letöltése (Android)</h3>
+              <p>Készítettünk egy mobilalkalmazást is, hogy még kényelmesebben tudj pályát foglalni és tájékozódni. Az alkalmazást két módon is letöltheted.</p>
+              
+              <hr class="my-4">
+
+              <h5 class="text-muted">1. Lehetőség: Letöltés Közvetlenül a Weboldalról (APK)</h5>
+              <p>A legegyszerűbb módja az alkalmazás telepítésének. Az "Android App Letöltése" gombra kattintva letöltheted a telepítőfájlt (`.apk`).</p>
+              <div class="text-center my-4">
+                  <a href="#" id="apk-download-link" style="display: none;" class="btn btn-success btn-lg" download>
+                    <i class="bi bi-android2"></i> Android App Letöltése
+                  </a>
+              </div>
+              <div class="alert alert-warning" role="alert">
+                <h4 class="alert-heading">⚠️ Fontos biztonsági figyelmeztetés</h4>
+                <p>Mivel az alkalmazás nem a Google Play Áruházból származik, a telefonod a telepítés előtt engedélyt fog kérni "ismeretlen forrásból származó alkalmazások telepítésére". Ez egy standard Android biztonsági funkció. Kérjük, engedélyezd a telepítést a mi alkalmazásunk számára. Garantáljuk, hogy a fájl biztonságos és vírusmentes.</p>
+              </div>
+
+              <hr class="my-4">
+
+              <h5 class="text-muted">2. Lehetőség: Letöltés Tesztelői Meghívóval</h5>
+              <p>Ez a módszer azoknak ajánlott, akik szeretnének részt venni az alkalmazás tesztelésében és a legfrissebb verziókat azonnal megkapni. A rendszer e-mailben küld egy meghívót, amiben található linkre kattintva töltheted le az alkalmazást.</p>
+              <p>Ha szeretnél bekerülni a tesztelői csoportba, kérjük, jelezd ezt az igényedet egy e-mailben a <strong>vorosbalint.vrs@gmail.com</strong> címen.</p>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer id="footer" class="footer">
+    <div class="container">
+      <div class="apk-download-container text-center mb-3">
+      </div>
+      <div class="copyright">
+        &copy; Copyright <strong><span>TCN Vázsony</span></strong>. All Rights Reserved
+      </div>
+      <div class="credits">
+      </div>
+    </div>
+  </footer>
+ 
+  <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  <div id="preloader"><div class="line"></div></div>
+  
+  <div class="modal fade" id="authModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Bejelentkezés / Regisztráció</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" style="color: #212529;">
+                
+                <div id="login-view">
+                    <form id="login-form">
+                        <div class="mb-3"><input type="email" id="login-email" class="form-control" placeholder="E-mail cím" required></div>
+                        <div class="mb-3"><input type="password" id="login-password" class="form-control" placeholder="Jelszó" required></div>
+                        <button type="button" id="login-button" class="btn btn-primary w-100">Bejelentkezés</button>
+                        <div class="d-flex justify-content-between mt-3">
+                            <a href="#" id="show-reg-view">Nincs még fiókod? Regisztrálj!</a>
+                            <a href="#" id="show-reset-view">Elfelejtetted a jelszavad?</a>
+                        </div>
+                    </form>
+                </div>
+                
+                <div id="registration-view" style="display: none;">
+                    <h4>Regisztráció</h4>
+                    <form id="reg-form">
+                        <div class="mb-3"><input type="text" id="reg-name" class="form-control" placeholder="Teljes név" required></div>
+                        <div class="mb-3"><input type="email" id="reg-email" class="form-control" placeholder="E-mail cím" required></div>
+                        <div class="mb-3"><input type="password" id="reg-password" class="form-control" placeholder="Jelszó" required></div>
+                        <div class="form-check mb-3"><input type="checkbox" id="reg-is-member" class="form-check-input"><label for="reg-is-member" class="form-check-label">Klubtag vagyok</label></div>
+                        <button type="button" id="reg-button" class="btn btn-success w-100">Regisztráció</button>
+                        <p class="text-center mt-3">Van már fiókod? <a href="#" id="show-login-view-from-reg">Jelentkezz be!</a></p>
+                    </form>
+                </div>
+
+                <div id="password-reset-view" style="display: none;">
+                    <h4>Jelszó visszaállítása</h4>
+                    <form id="reset-form">
+                        <p class="form-text">Add meg a regisztrált e-mail címedet, és küldünk egy linket, amellyel új jelszót adhatsz meg.</p>
+                        <div class="mb-3"><input type="email" id="reset-email" class="form-control" placeholder="E-mail cím" required></div>
+                        <button type="button" id="reset-button" class="btn btn-warning w-100">Visszaállító link küldése</button>
+                        <p class="text-center mt-3"><a href="#" id="show-login-view-from-reset">Vissza a bejelentkezéshez</a></p>
+                    </form>
+                </div>
+
+                <p id="error-message" class="text-danger mt-3 text-center"></p>
+                <p id="success-message" class="text-success mt-3 text-center"></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+  <script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="/assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="/assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="/assets/vendor/aos/aos.js"></script>
+  <script src="/assets/js/main.js"></script>
+  <script type="module" src="/assets/js/main-script.js"></script>
+  <script src="/assets/js/chat-widget.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Kapcsolat - TCN Vázsony</title>
+    <meta content="Lépj velünk kapcsolatba, ha kérdésed van, vagy látogass meg minket a pályánkon!" name="description">
+    <meta content="tenisz, kontakt, elérhetőség, nagyvázsony" name="keywords">
+    
+    <link href="/assets/img/favicon.jpg" rel="icon">
+    <link href="/assets/img/apple-touch-icon.jpg" rel="apple-touch-icon">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600;1,700&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Cardo:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+    <link href="/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+    <link href="/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="/assets/vendor/aos/aos.css" rel="stylesheet">
+    <link href="/assets/css/main.css" rel="stylesheet">
+    
+    <style>
+        /* Reszponzív térkép konténer stílusa */
+        .map-container {
+            overflow: hidden;
+            padding-bottom: 56.25%; /* 16:9 képarány */
+            position: relative;
+            height: 0;
+            border: 1px solid #ddd;
+        }
+        .map-container iframe {
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 100%;
+            position: absolute;
+        }
+        .modal-body {
+            color: #212529; /* Bejelentkező ablak szövegszíne */
+        }
+    </style>
+</head>
+<body>
+  <header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="container-fluid d-flex align-items-center justify-content-between">
+      <a href="/" class="logo d-flex align-items-center me-auto me-lg-0">
+        <img src="/assets/img/apple-touch-icon.jpg" alt=""><h1>TCN Vázsony</h1>
+      </a>
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a href="/">Kezdőoldal</a></li>
+          <li><a href="/rolunk/">Rólunk</a></li>
+          <li><a href="/alkalmazas/">Alkalmazás</a></li>
+          <li><a href="/eredmenyek/">Eredmények</a></li>
+          <li><a href="/versenykepek/">Galéria</a></li>
+          <li><a href="/hirek/">Hírek</a></li>
+          <li><a href="/dokumentumok/">Dokumentumok</a></li>
+          <li><a href="/versenyek/">Versenyek</a></li>
+          <li><a href="/kapcsolat/" class="active">Kapcsolat</a></li>
+
+          <li><a href="/foglalas/" class="action-link booking-link">Időpontfoglalás</a></li>
+          <li id="nav-login-button"><a href="#" class="action-link login-link" data-bs-toggle="modal" data-bs-target="#authModal">Bejelentkezés</a></li>
+          <li class="dropdown" id="nav-user-info" style="display: none;"><a href="#"><span>Szia, ...</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+              <li><a href="/profil/" id="nav-profile-link">Profilom</a></li>
+              <li><a href="/foglalasaim/" >Foglalásaim</a></li>
+              <li><a href="#" id="logout-button">Kijelentkezés</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
+      <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
+    </div>
+  </header>
+  
+  <main id="main" data-aos="fade" data-aos-delay="1500">
+    <div class="page-header d-flex align-items-center">
+      <div class="container position-relative">
+        <div class="row d-flex justify-content-center">
+          <div class="col-lg-6 text-center">
+            <h2>Kapcsolat</h2>
+            <p>Lépj velünk kapcsolatba, ha kérdésed van, vagy látogass meg minket a pályánkon!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section id="contact" class="contact">
+      <div class="container">
+        <div class="row gy-4 justify-content-center">
+          <div class="col-lg-3">
+            <div class="info-item d-flex">
+              <i class="bi bi-geo-alt flex-shrink-0"></i>
+              <div>
+                <h4>Helyszín:</h4>
+                <p>8291 Nagyvázsony, Völgy Park</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="info-item d-flex">
+              <i class="bi bi-envelope flex-shrink-0"></i>
+              <div>
+                <h4>Email:</h4>
+                <p>teniszclubnagyvazsony@gmail.com</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="info-item d-flex">
+              <i class="bi bi-phone flex-shrink-0"></i>
+              <div>
+                <h4>Telefon:</h4>
+                <p>+36 70 332 1755</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row justify-content-center mt-4">
+          <div class="col-lg-9">
+            <div class="map-container">
+              <iframe src="https://www.google.com/maps/embed?pb=!4v1753774605835!6m8!1m7!1sSp_1ZJruuXceMf1YaWAMiQ!2m2!1d46.98405615700668!2d17.70024168159996!3f68.88934738357595!4f-3.78792069974169!5f0.7820865974627469" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  
+  <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  <div id="preloader"><div class="line"></div></div>
+
+<div class="modal fade" id="authModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Bejelentkezés / Regisztráció</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" style="color: #212529;">
+                
+                <div id="login-view">
+                    <form id="login-form">
+                        <div class="mb-3"><input type="email" id="login-email" class="form-control" placeholder="E-mail cím" required></div>
+                        <div class="mb-3"><input type="password" id="login-password" class="form-control" placeholder="Jelszó" required></div>
+                        <button type="button" id="login-button" class="btn btn-primary w-100">Bejelentkezés</button>
+                        <div class="d-flex justify-content-between mt-3">
+                            <a href="#" id="show-reg-view">Nincs még fiókod? Regisztrálj!</a>
+                            <a href="#" id="show-reset-view">Elfelejtetted a jelszavad?</a>
+                        </div>
+                    </form>
+                </div>
+                
+                <div id="registration-view" style="display: none;">
+                    <h4>Regisztráció</h4>
+                    <form id="reg-form">
+                        <div class="mb-3"><input type="text" id="reg-name" class="form-control" placeholder="Teljes név" required></div>
+                        <div class="mb-3"><input type="email" id="reg-email" class="form-control" placeholder="E-mail cím" required></div>
+                        <div class="mb-3"><input type="password" id="reg-password" class="form-control" placeholder="Jelszó" required></div>
+                        <div class="form-check mb-3"><input type="checkbox" id="reg-is-member" class="form-check-input"><label for="reg-is-member" class="form-check-label">Klubtag vagyok</label></div>
+                        <button type="button" id="reg-button" class="btn btn-success w-100">Regisztráció</button>
+                        <p class="text-center mt-3">Van már fiókod? <a href="#" id="show-login-view-from-reg">Jelentkezz be!</a></p>
+                    </form>
+                </div>
+
+                <div id="password-reset-view" style="display: none;">
+                    <h4>Jelszó visszaállítása</h4>
+                    <form id="reset-form">
+                        <p class="form-text">Add meg a regisztrált e-mail címedet, és küldünk egy linket, amellyel új jelszót adhatsz meg.</p>
+                        <div class="mb-3"><input type="email" id="reset-email" class="form-control" placeholder="E-mail cím" required></div>
+                        <button type="button" id="reset-button" class="btn btn-warning w-100">Visszaállító link küldése</button>
+                        <p class="text-center mt-3"><a href="#" id="show-login-view-from-reset">Vissza a bejelentkezéshez</a></p>
+                    </form>
+                </div>
+
+                <p id="error-message" class="text-danger mt-3 text-center"></p>
+                <p id="success-message" class="text-success mt-3 text-center"></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+  <script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="/assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="/assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="/assets/vendor/aos/aos.js"></script>
+  <script src="/assets/js/main.js"></script>
+  <script type="module" src="/assets/js/main-script.js"></script>
+  <script src="/assets/js/chat-widget.js"></script>
+    <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1100">
+  <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+      <strong class="me-auto" id="toast-title">Értesítés</strong>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body" id="toast-body">
+      </div>
+  </div>
+</div>
+</body>
+</html>

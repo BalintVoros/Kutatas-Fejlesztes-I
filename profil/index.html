@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Profilom - TCN Vázsony</title>
+    
+    <link href="/assets/img/favicon.jpg" rel="icon">
+    <link href="/assets/img/apple-touch-icon.jpg" rel="apple-touch-icon">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600;1,700&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Cardo:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+    <link href="/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+    <link href="/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="/assets/vendor/aos/aos.css" rel="stylesheet">
+    <link href="/assets/css/main.css" rel="stylesheet">
+    
+    <style>
+        .modal-body, .profile .card-body, .profile .form-label, .profile .table, .profile .nav-tabs .nav-link {
+            color: #212529 !important;
+        }
+    </style>
+</head>
+<body>
+  <header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="container-fluid d-flex align-items-center justify-content-between">
+      <a href="/" class="logo d-flex align-items-center me-auto me-lg-0">
+        <img src="/assets/img/apple-touch-icon.jpg" alt=""><h1>TCN Vázsony</h1>
+      </a>
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a href="/">Kezdőoldal</a></li>
+          <li><a href="/rolunk/">Rólunk</a></li>
+          <li><a href="/alkalmazas/">Alkalmazás</a></li>
+          <li><a href="/eredmenyek/">Eredmények</a></li>
+          <li><a href="/versenykepek/">Galéria</a></li>
+          <li><a href="/hirek/">Hírek</a></li>
+          <li><a href="/dokumentumok/">Dokumentumok</a></li>
+          <li><a href="/versenyek/">Versenyek</a></li>
+          <li><a href="/kapcsolat/">Kapcsolat</a></li>
+          <li><a href="/foglalas/" class="action-link booking-link">Időpontfoglalás</a></li>
+          <li id="nav-login-button"><a href="#" class="action-link login-link" data-bs-toggle="modal" data-bs-target="#authModal">Bejelentkezés</a></li>
+          <li class="dropdown" id="nav-user-info" style="display: none;"><a href="#" class="active"><span>Szia, ...</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+              <li><a href="/profil/" class="active">Profilom</a></li>
+              <li><a href="/foglalasaim/">Foglalásaim</a></li>
+              <li><a href="#" id="logout-button">Kijelentkezés</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
+      <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
+    </div>
+  </header>
+  
+  <main id="main" data-aos="fade" data-aos-delay="1500">
+    <div class="page-header d-flex align-items-center">
+      <div class="container position-relative">
+        <div class="row d-flex justify-content-center">
+          <div class="col-lg-8 text-center">
+            <h2>Felhasználói Fiók</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <section id="profile-page" class="profile">
+        <div class="container">
+            <div id="loading-spinner" class="text-center">
+                <div class="spinner-border" role="status"><span class="visually-hidden">Betöltés...</span></div>
+            </div>
+            
+            <div id="profile-content" style="display: none;">
+                <div class="row justify-content-center">
+                    <div class="col-lg-10">
+                        
+                        <ul class="nav nav-tabs" id="profileTab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="edit-profile-tab" data-bs-toggle="tab" data-bs-target="#edit-profile-pane" type="button" role="tab">Profil szerkesztése</button>
+                            </li>
+                        </ul>
+                        
+                        <div class="tab-content card mb-5" id="profileTabContent">
+                            <div class="tab-pane fade show active" id="edit-profile-pane" role="tabpanel">
+                                <div class="card-body">
+                                    <h5 class="card-title">Személyes adatok</h5>
+                                    <form id="profile-form" novalidate>
+                                        <div class="mb-3"><label for="profile-email" class="form-label">E-mail cím</label><input type="email" class="form-control" id="profile-email" disabled></div>
+                                        <div class="mb-3"><label for="profile-name" class="form-label">Teljes Név</label><input type="text" class="form-control" id="profile-name" required></div>
+                                        <div class="alert alert-success mt-3" id="profile-success-message" style="display: none;">Profil sikeresen frissítve!</div>
+                                        <button type="submit" class="btn btn-primary">Módosítások mentése</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row justify-content-center mb-5">
+                            <div class="col-12">
+                                <div class="card shadow border-info">
+                                    <div class="card-header bg-info text-dark fw-bold">
+                                        <h5 class="mb-0"><i class="bi bi-trophy"></i> Meccseredmény Beküldése (Jóváhagyásra)</h5>
+                                    </div>
+                                    <div class="card-body">
+                                      <form id="match-result-form" class="row g-3">
+    <div class="col-12">
+        <label class="form-label text-dark fw-bold">Ellenfél kiválasztása</label>
+        <select id="opponent-select" class="form-select" required>
+            <option value="">Betöltés...</option>
+        </select>
+    </div>
+    
+    <div class="col-12 mt-4 text-center">
+        <label class="form-label d-block fw-bold border-bottom pb-2 text-dark">Eredmény (Gémek szettenként)</label>
+        
+        <div class="table-responsive">
+            <table class="table table-borderless align-middle mx-auto" style="max-width: 400px;">
+                <thead>
+                    <tr class="text-muted small">
+                        <th></th>
+                        <th>1. Szett</th>
+                        <th>2. Szett</th>
+                        <th>3. Szett</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="fw-bold text-primary text-end">Én:</td>
+                        <td><select id="my-s1" class="form-select score-select" required></select></td>
+                        <td><select id="my-s2" class="form-select score-select" required></select></td>
+                        <td><select id="my-s3" class="form-select score-select"><option value="">-</option></select></td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold text-danger text-end">Ellenfél:</td>
+                        <td><select id="opp-s1" class="form-select score-select" required></select></td>
+                        <td><select id="opp-s2" class="form-select score-select" required></select></td>
+                        <td><select id="opp-s3" class="form-select score-select"><option value="">-</option></select></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="small text-muted">A 3. szett opcionális (döntő szett).</div>
+    </div>
+
+    <div class="col-12 mt-3">
+        <button type="submit" class="btn btn-info w-100 text-dark fw-bold shadow-sm">Kérvényezés Adminnál</button>
+    </div>
+</form>
+                                        <div class="mt-2 small text-muted"><i class="bi bi-info-circle"></i> Az eredmények csak az Admin jóváhagyása után számítanak bele a statisztikádba!</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mt-4">
+                            <div class="col-lg-8">
+                                <div class="card shadow mb-4">
+                                    <div class="card-header bg-primary text-white">
+                                        <h5 class="mb-0"><i class="bi bi-graph-up"></i> Egyéni Fejlődési Görbe (Admin által jóváhagyott meccsek)</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <canvas id="performanceChart" height="150"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4">
+                                <div class="card shadow border-warning mb-4">
+                                    <div class="card-header bg-warning text-dark fw-bold">
+                                        <i class="bi bi-cpu"></i> Következő Meccs Esélyek
+                                    </div>
+                                    <div class="card-body text-center">
+                                        <select id="predict-opponent-select" class="form-select mb-3" onchange="runPrediction()">
+                                            <option value="">Válassz ellenfelet a jósláshoz...</option>
+                                        </select>
+                                        
+                                        <div class="progress mb-3" style="height: 30px; font-size: 16px;">
+                                            <div id="win-prob-bar" class="progress-bar bg-success" style="width: 50%;">50%</div>
+                                            <div id="lose-prob-bar" class="progress-bar bg-danger" style="width: 50%;">50%</div>
+                                        </div>
+                                        
+                                        <ul class="list-unstyled text-start small mb-0 mt-3">
+                                            <li><i class="bi bi-check-circle text-success"></i> H2H Mérleg: +20%</li>
+                                            <li><i class="bi bi-exclamation-triangle text-warning"></i> Fáradtság: -5%</li>
+                                            <li><i class="bi bi-cloud-sun text-info"></i> Időjárás: +8%</li>
+                                        </ul>
+                                        <hr>
+                                        <button class="btn btn-outline-primary btn-sm w-100" onclick="runPrediction()">Újrakalkulálás</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+  </main>
+
+  <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  <div id="preloader"><div class="line"></div></div>
+  
+  <div class="modal fade" id="authModal" tabindex="-1"></div>
+
+  <script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="/assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="/assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="/assets/vendor/aos/aos.js"></script>
+  
+  <script src="/assets/js/main.js"></script>
+  <script type="module" src="/assets/js/main-script.js"></script>
+  <script src="/assets/js/chat-widget.js"></script>
+  
+  <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1100">
+      <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+          <strong class="me-auto" id="toast-title">Értesítés</strong>
+          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body" id="toast-body"></div>
+      </div>
+  </div>
+</body>
+</html>
