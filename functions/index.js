@@ -168,6 +168,48 @@ export const askTennisBot = onCall({ region: "europe-west1" }, async (request) =
         throw new HttpsError("invalid-argument", "Hiányzó üzenet.");
     }
 
+    const defaultNoAnswer = "Sajnos erre a kérdésre nem tudok válaszolni, kérlek keress minket az teniszclubnagyvazsony@gmail.com címen!";
+    const pricingReply = "Árakkal és pénzügyekkel kapcsolatban weboldalunkon nem adunk tájékoztatást. Kérlek, hívd az ügyfélszolgálatunkat telefonon, ahol kollégáink készséggel segítenek!";
+
+    const normalize = (text) => text
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "");
+
+    const getFallbackReply = (message) => {
+        const msg = normalize(message);
+
+        if (/\b(ar|arak|penz|koltseg|dij|berleti)\b/.test(msg)) {
+            return pricingReply;
+        }
+        if (/(nyitvatart|mikor van nyitva|meddig vagytok nyitva|nyitva tartas)/.test(msg)) {
+            return "A klub nyitvatartása minden nap 07:00 - 21:00.";
+        }
+        if (/(palyafoglal|hogyan foglal|foglalas menete|foglalni)/.test(msg)) {
+            return "Foglalni a weboldal \"Foglalás\" menüpontjában lehet.";
+        }
+        if (/(palya|boritas|salak|nagy palya|kis palya)/.test(msg)) {
+            return "A klubban kiváló minőségű salakos pályák vannak: Nagy Pálya és Kis Pálya.";
+        }
+        if (/(alkalmazas|android app|mobil app)/.test(msg)) {
+            return "Az android alkalmazást a weboldalon az \"Alkalmazás\" menüpont alatt éred el. Az appban foglalás, eredmények és dokumentumok is elérhetők.";
+        }
+        if (/(eredmeny|verseny eredmeny|kategori)/.test(msg)) {
+            return "A versenyeredmények az Eredmények oldalon találhatók: Felnőtt férfi, Felnőtt női, Páros és Labaszüreti kupa kategóriákban.";
+        }
+        if (/(email|e-mail|elerhetoseg|kapcsolat)/.test(msg)) {
+            return "A klub e-mail címe: teniszclubnagyvazsony@gmail.com";
+        }
+        if (/(palya allapot|karbantart|lezaras)/.test(msg)) {
+            return "A pálya állapotáról és karbantartásáról a weboldal \"Pálya állapota\" menüpontjában találsz friss információkat.";
+        }
+        if (/(edzesi tipp|kezdo|tanacs)/.test(msg)) {
+            return "Kezdőknek: fókuszálj az ütő helyes fogására és a lábmunkára, és mindig nézd a labdát.";
+        }
+
+        return defaultNoAnswer;
+    };
+
     const clubKnowledgeBase = `
         Te a TCN Vázsony teniszklub barátságos, intelligens asszisztense vagy.
         Szigorú szabály: KIZÁRÓLAG a következő információk alapján válaszolhatsz. 
@@ -196,7 +238,7 @@ export const askTennisBot = onCall({ region: "europe-west1" }, async (request) =
     `;
 
     const genAI = new GoogleGenerativeAI(GEMINI_API_KEY.value());
-    const modelCandidates = ["gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash-latest"];
+    const modelCandidates = ["gemini-2.5-flash", "gemini-2.0-flash", "gemini-2.0-flash-lite"];
 
     let lastError = null;
     for (const modelName of modelCandidates) {
@@ -214,8 +256,8 @@ export const askTennisBot = onCall({ region: "europe-west1" }, async (request) =
         }
     }
 
-    logger.error("Gemini API Hiba: nincs elérhető modell", lastError);
-    throw new HttpsError('internal', 'Az asszisztens átmenetileg nem elérhető. Próbáld újra később.');
+    logger.error("Gemini API Hiba: fallback választ adunk", lastError);
+    return { reply: getFallbackReply(userMessage) };
 });
 
 

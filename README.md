@@ -1,2 +1,5 @@
-# Kutat-s-Fejleszt-s-I
-Kutatás fejlesztés I tantárgyra készült projekt
+# Nagyvázsony Tenisz Club számára elkészített weboldal.
+
+Elérése: https://tcnv.hu
+
+Állapot: Fejlesztés alatt.
