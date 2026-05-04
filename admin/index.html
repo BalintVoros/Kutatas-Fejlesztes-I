@@ -315,6 +315,11 @@
   <script src="/assets/vendor/glightbox/js/glightbox.min.js"></script>
   <script src="/assets/vendor/aos/aos.js"></script>
   <script src="/assets/js/main.js"></script>
+  <script>
+    window.addEventListener('error', function(event) {
+      console.error('Global error:', event.error);
+    });
+  </script>
   <script type="module" src="/assets/js/main-script.js"></script>
   <script src="/assets/js/chat-widget.js"></script>
 

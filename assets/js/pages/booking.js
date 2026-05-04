@@ -190,11 +190,35 @@ export function initBookingPage(currentUser, currentUserData) {
         const namesInput = document.getElementById('player-names');
         const durationSelect = document.getElementById('booking-duration');
         const durationWarning = document.getElementById('duration-warning');
+        const weatherSummary = document.getElementById('booking-weather-summary');
         if (currentUserData.isMember) phoneField.style.display = 'none'; else phoneField.style.display = 'block';
         timeSpan.textContent = `${date}, ${hour}:00`;
         namesInput.value = currentUserData.name || '';
         durationSelect.value = '1';
         durationWarning.style.display = 'none';
+
+        const weather = window.TCNWeather || {};
+        if (weatherSummary) {
+            if (weather.temp !== undefined && weather.humidity !== undefined && weather.windSpeed !== undefined) {
+                const riskText = weather.riskLevel || 'Friss időjárás-adatok';
+                weatherSummary.className = `alert ${weather.alertClass || 'alert-info'} weather-alert booking-weather-summary mb-3`;
+                weatherSummary.innerHTML = `
+                    <div class="booking-weather-summary-top">
+                        <div class="booking-weather-summary-title">Időjárás a foglaláshoz</div>
+                        <div class="booking-weather-summary-temp">${weather.temp}°C</div>
+                    </div>
+                    <div class="booking-weather-summary-meta">
+                        <span class="booking-weather-chip">Páratartalom: ${weather.humidity}%</span>
+                        <span class="booking-weather-chip">Szél: ${weather.windSpeed} km/h</span>
+                        <span class="booking-weather-chip booking-weather-chip-soft">${riskText}</span>
+                    </div>
+                `;
+            } else {
+                weatherSummary.className = 'alert alert-secondary weather-alert booking-weather-summary mb-3';
+                weatherSummary.textContent = 'Az időjárás adatai jelenleg nem érhetők el.';
+            }
+        }
+
         const nextHourIsBooked = bookedSlots.some(slot => slot.hour === hour + 1);
         if (hour === 20 || nextHourIsBooked) {
             durationSelect.querySelector('option[value="2"]').disabled = true;

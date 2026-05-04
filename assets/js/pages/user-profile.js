@@ -13,28 +13,44 @@ let performanceChartInstance = null;
 async function initializeMyBookingsPage(currentUser) {
     const upcomingBody = document.getElementById('upcoming-bookings-body');
     const pastBody = document.getElementById('past-bookings-body');
+    const loadingSpinner = document.getElementById('loading-spinner');
+    const bookingsContent = document.getElementById('bookings-content');
     if (!upcomingBody || !pastBody) return;
+
+    if (loadingSpinner) loadingSpinner.style.display = 'block';
+    if (bookingsContent) bookingsContent.style.display = 'none';
 
     try {
         const q = query(collection(db, "bookings"), where("userId", "==", currentUser.uid), orderBy("date", "desc"));
         const querySnapshot = await getDocs(q);
         const upcomingHtml = []; const pastHtml = [];
         const todayString = new Date().toISOString().split('T')[0];
+        let upcomingCount = 0;
+        let pastCount = 0;
+        let confirmedCount = 0;
 
         querySnapshot.forEach(docSnap => {
             const booking = docSnap.data();
             let courtName = booking.courtId === 'nagy_palya' ? 'Nagy Pálya' : 'Kis Pálya';
             if (booking.date >= todayString) {
+                upcomingCount++;
+                if (booking.status === 'confirmed') confirmedCount++;
                 let statusBadge = booking.status === 'pending' ? `<span class='badge bg-warning text-dark'>Függőben</span>` : `<span class='badge bg-success'>Jóváhagyva</span>`;
                 upcomingHtml.push(`<tr><td>${booking.date}</td><td>${booking.time}</td><td>${courtName}</td><td>${statusBadge}</td><td><button class="btn btn-sm btn-outline-danger cancel-booking-btn" data-id="${docSnap.id}">Lemondás</button></td></tr>`);
             } else {
+                 pastCount++;
                  let statusBadge = booking.status === 'confirmed' ? `<span class='badge bg-secondary'>Lezárult</span>` : `<span class='badge bg-light text-dark'>Elutasítva/Törölve</span>`;
                 pastHtml.push(`<tr><td>${booking.date}</td><td>${booking.time}</td><td>${courtName}</td><td>${statusBadge}</td></tr>`);
             }
         });
 
-        upcomingBody.innerHTML = upcomingHtml.length > 0 ? upcomingHtml.join('') : `<tr><td colspan="5" class="text-center">Nincs foglalás.</td></tr>`;
-        pastBody.innerHTML = pastHtml.length > 0 ? pastHtml.join('') : `<tr><td colspan="4" class="text-center">Nincs foglalás.</td></tr>`;
+        upcomingBody.innerHTML = upcomingHtml.length > 0 ? upcomingHtml.join('') : `<tr><td colspan="5" class="text-center py-4 text-muted">Még nincs jövőbeli foglalásod. Foglalj egy időpontot, és itt fog megjelenni.</td></tr>`;
+        pastBody.innerHTML = pastHtml.length > 0 ? pastHtml.join('') : `<tr><td colspan="4" class="text-center py-4 text-muted">Még nincs lezárt foglalásod.</td></tr>`;
+
+        renderBookingsOverview({ total: querySnapshot.size, upcomingCount, pastCount, confirmedCount });
+
+        if (loadingSpinner) loadingSpinner.style.display = 'none';
+        if (bookingsContent) bookingsContent.style.display = 'block';
 
         upcomingBody.querySelectorAll('.cancel-booking-btn').forEach(button => {
             button.onclick = async (e) => {
@@ -45,6 +61,38 @@ async function initializeMyBookingsPage(currentUser) {
             };
         });
     } catch (error) { console.error(error); }
+}
+
+function renderBookingsOverview({ total, upcomingCount, pastCount, confirmedCount }) {
+    const bookingsContent = document.getElementById('bookings-content');
+    if (!bookingsContent) return;
+
+    let overview = document.getElementById('bookings-overview');
+    if (!overview) {
+        overview = document.createElement('div');
+        overview.id = 'bookings-overview';
+        overview.className = 'row g-3 mb-4';
+        bookingsContent.insertBefore(overview, bookingsContent.firstElementChild);
+    }
+
+    const cards = [
+        { label: 'Összes foglalás', value: total, icon: 'bi-calendar-event', tone: 'primary' },
+        { label: 'Jövőbeli', value: upcomingCount, icon: 'bi-clock-history', tone: 'success' },
+        { label: 'Múltbeli', value: pastCount, icon: 'bi-archive', tone: 'secondary' },
+        { label: 'Jóváhagyott', value: confirmedCount, icon: 'bi-check2-circle', tone: 'info' },
+    ];
+
+    overview.innerHTML = cards.map(card => `
+        <div class="col-md-3 col-6">
+            <div class="booking-stat-card stat-${card.tone}">
+                <div class="booking-stat-icon"><i class="bi ${card.icon}"></i></div>
+                <div>
+                    <div class="booking-stat-value">${card.value}</div>
+                    <div class="booking-stat-label">${card.label}</div>
+                </div>
+            </div>
+        </div>
+    `).join('');
 }
 
 function initializeProfilePage(currentUser, currentUserData) {

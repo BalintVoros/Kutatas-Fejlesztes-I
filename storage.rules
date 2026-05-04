@@ -1,0 +1,25 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    
+    match /gallery/{allPaths=**} {
+      allow read: if true; 
+      allow write: if request.auth != null;
+    }
+    
+    match /app/{allPaths=**} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+    
+    match /documents/{allPaths=**} {
+      allow read: if true; // Explicitly set to true for public downloads
+      allow write: if request.auth != null;
+    }
+    
+    // Catch-all for anything outside those folders
+    match /{allPaths=**} {
+      allow read, write: if request.auth != null;
+    }
+  }
+}

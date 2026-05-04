@@ -189,6 +189,9 @@
                 </div>
                 <div class="modal-body">
                     <p>Időpont: <strong id="booking-modal-time"></strong></p>
+                    <div id="booking-weather-summary" class="alert alert-secondary weather-alert mb-3" role="status" aria-live="polite" aria-atomic="true">
+                        Az időjárás adatai a kiválasztott időponthoz itt jelennek meg.
+                    </div>
                     <div class="mb-3">
                         <label for="player-names" class="form-label">Játékos(ok) neve:</label>
                         <input type="text" id="player-names" class="form-control" placeholder="Pl. Kiss János, Nagy Béla" required>
@@ -243,7 +246,13 @@
     <script src="/assets/vendor/glightbox/js/glightbox.min.js"></script>
     <script src="/assets/vendor/swiper/swiper-bundle.min.js"></script>
     <script src="/assets/js/main.js"></script>
+    <script>
+      window.addEventListener('error', function(event) {
+        console.error('Global error:', event.error);
+      });
+    </script>
     <script type="module" src="/assets/js/main-script.js"></script>
+        <script src="/assets/js/weather-advisor.js"></script>
     <script src="/assets/js/chat-widget.js"></script>
       <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1100">
   <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">

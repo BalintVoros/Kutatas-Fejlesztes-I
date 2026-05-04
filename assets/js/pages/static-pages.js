@@ -6,7 +6,8 @@ import { collection, query, orderBy, getDocs, onSnapshot } from "https://www.gst
 // --- PÁLYA ÁLLAPOT MEGJELENÍTÉSE (KEZDŐLAP) ---
 function initializeCourtStatusDisplay() {
     const statusContainer = document.getElementById('court-status-container');
-    if (!statusContainer) return;
+    const heroStatusContainer = document.getElementById('hero-court-status-container');
+    if (!statusContainer && !heroStatusContainer) return;
     const statusRef = collection(db, 'court_status');
     onSnapshot(statusRef, (snapshot) => {
         let statuses = { 'nagy_palya': { status: 'Ismeretlen', color: 'secondary' }, 'kis_palya': { status: 'Ismeretlen', color: 'secondary' } };
@@ -19,7 +20,10 @@ function initializeCourtStatusDisplay() {
             else if (data.status === 'Eső miatt nem lehet') { color = 'danger'; }
             statuses[doc.id] = { status: data.status, color: color };
         });
-        statusContainer.innerHTML = `<div class="col-md-5"><div class="status-card"><h4>Nagy Pálya</h4><span class="badge bg-${statuses.nagy_palya.color}">${statuses.nagy_palya.status}</span></div></div><div class="col-md-5"><div class="status-card"><h4>Kis Pálya</h4><span class="badge bg-${statuses.kis_palya.color}">${statuses.kis_palya.status}</span></div></div>`;
+        const statusHtml = `<div class="col-md-5"><div class="status-card"><h4>Nagy Pálya</h4><span class="badge bg-${statuses.nagy_palya.color}">${statuses.nagy_palya.status}</span></div></div><div class="col-md-5"><div class="status-card"><h4>Kis Pálya</h4><span class="badge bg-${statuses.kis_palya.color}">${statuses.kis_palya.status}</span></div></div>`;
+        const heroStatusHtml = `<div class="col-6"><div class="court-preview-card"><h4>Nagy Pálya</h4><span class="badge bg-${statuses.nagy_palya.color}">${statuses.nagy_palya.status}</span></div></div><div class="col-6"><div class="court-preview-card"><h4>Kis Pálya</h4><span class="badge bg-${statuses.kis_palya.color}">${statuses.kis_palya.status}</span></div></div>`;
+        if (statusContainer) statusContainer.innerHTML = statusHtml;
+        if (heroStatusContainer) heroStatusContainer.innerHTML = heroStatusHtml;
     });
 }
 
@@ -50,7 +54,7 @@ async function initializeNewsPage() {
 }
 
 export function initStaticPages() {
-    if (document.getElementById('court-status-section')) {
+    if (document.getElementById('court-status-section') || document.getElementById('hero-court-status-container')) {
         initializeCourtStatusDisplay();
     }
     if (document.getElementById('news-section')) {

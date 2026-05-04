@@ -16,9 +16,21 @@ const firebaseConfig = {
 	measurementId: "G-799X7V4087"
 };
 
+console.log('Initializing Firebase with config:', firebaseConfig);
+
 const app = initializeApp(firebaseConfig);
+console.log('Firebase app initialized');
 
 export const auth = getAuth(app);
+console.log('Auth initialized');
+
 export const db = getFirestore(app);
-export const storage = getStorage(app);
+console.log('Firestore initialized');
+
+export const storage = getStorage(app, "gs://tcnweboldal.firebasestorage.app");
+console.log('Storage initialized with gs://tcnweboldal.firebasestorage.app');
+
 export const functions = getFunctions(app, 'europe-west1');
+console.log('Functions initialized');
+
+console.log('All Firebase modules loaded successfully');

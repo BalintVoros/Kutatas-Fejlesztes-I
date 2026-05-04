@@ -24,7 +24,7 @@
         .modal-body { color: #212529; }
     </style>
 </head>
-<body>
+<body class="home-front">
   <header id="header" class="header d-flex align-items-center fixed-top">
     <div class="container-fluid d-flex align-items-center justify-content-between">
       <a href="/" class="logo d-flex align-items-center me-auto me-lg-0">
@@ -57,96 +57,66 @@
     </div>
   </header>
   
-  <section id="hero" class="hero d-flex flex-column justify-content-center align-items-center" data-aos="fade" data-aos-delay="1500">
+  <section id="hero" class="hero" data-aos="fade" data-aos-delay="1500">
     <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-lg-6 text-center">
-          <h2>Üdvözlünk a <span>TCN Vázsony</span> weboldalán!</h2>
-          <p>Foglalj pályát online, kövesd a legfrissebb híreket és légy részese a közösségünknek!</p>
-          <a href="/foglalas/" class="btn-get-started">Pályafoglalás most!</a>
+      <div class="row align-items-center justify-content-center g-4">
+        <div class="col-lg-6 text-center text-lg-start">
+          <div class="hero-copy">
+            <h2>Üdvözlünk a <span>TCN Vázsony</span> weboldalán!</h2>
+            <p>Foglalj pályát online, kövesd a legfrissebb híreket és légy részese a közösségünknek!</p>
+            <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center justify-content-lg-start">
+              <a href="/foglalas/" class="btn-get-started">Pályafoglalás most!</a>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-  </section>
-  <section id="health-advisor" class="health-advisor section-bg py-5">
-  <div class="container" data-aos="fade-up">
-    <div class="section-title">
-      <h2>Pályainfó & Egészség</h2>
-      <p>Élő időjárás és sportélettani ajánlás aktuális játékhoz</p>
-    </div>
 
-    <div class="row justify-content-center">
-      <div class="col-lg-8">
-        <div class="card shadow" id="weather-card">
-          <div class="card-body text-center">
-            <h4 class="card-title">Klub aktuális időjárása: <span id="club-location">Nagyvázsony</span></h4>
-            <div class="display-4 my-3">
-              <span id="current-temp">--</span>°C 
-              <img id="weather-icon" src="" alt="Időjárás ikon" style="display:none; width: 60px;">
+        <div class="col-lg-5 offset-lg-1">
+          <div class="weather-panel" id="weather-panel">
+            <div class="weather-panel-header">
+              <div>
+                <div class="weather-kicker">Aktuális pályaidő</div>
+                <h3>Klub időjárása</h3>
+              </div>
+              <div class="weather-location"><i class="bi bi-geo-alt-fill"></i> <span id="club-location">Nagyvázsony</span></div>
             </div>
-            <p class="text-muted">Páratartalom: <span id="current-humidity">--</span>% | Szél: <span id="current-wind">--</span> km/h</p>
-            
-            <hr>
-            
-            <h5 class="mt-4">Okos Egészségügyi Ajánlás</h5>
-            <div id="health-alert" class="alert alert-secondary" role="alert">
-              Adatok betöltése...
+
+            <div class="weather-panel-main">
+              <div class="weather-temp-wrap">
+                <div class="weather-temp"><span id="current-temp">--</span>°C</div>
+                <img id="weather-icon" src="" alt="Időjárás ikon" style="display:none; width: 72px;">
+              </div>
+              <p class="weather-meta">Páratartalom: <span id="current-humidity">--</span>% • Szél: <span id="current-wind">--</span> km/h</p>
+              <div id="health-alert" class="alert alert-secondary weather-alert" role="alert">Adatok betöltése...</div>
+              <ul class="list-unstyled weather-details" id="health-details"></ul>
             </div>
-            <ul class="list-unstyled text-start mt-3" id="health-details">
-              </ul>
+          </div>
+
+          <div class="court-preview-panel mt-3">
+            <div class="court-preview-header">
+              <div class="weather-kicker">Élő pályastátusz</div>
+              <h3>Pályaállapot</h3>
+            </div>
+            <div id="hero-court-status-container" class="row g-3">
+              <div class="col-6">
+                <div class="court-preview-card">
+                  <h4>Nagy Pálya</h4>
+                  <span class="badge bg-secondary">Betöltés...</span>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="court-preview-card">
+                  <h4>Kis Pálya</h4>
+                  <span class="badge bg-secondary">Betöltés...</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-  <main id="main" data-aos="fade" data-aos-delay="1500">
-    
-    <!-- PÁLYA ÁLLAPOT JELZŐ -->
-    <section id="court-status-section" class="court-status-section">
-        <div class="container text-center">
-            <div id="court-status-container" class="row justify-content-center gy-4">
-                <div class="col-md-5"><h3>Nagy Pálya</h3><span class="badge bg-secondary">Betöltés...</span></div>
-                <div class="col-md-5"><h3>Kis Pálya</h3><span class="badge bg-secondary">Betöltés...</span></div>
-            </div>
-        </div>
-    </section>
-<section id="app-cta" class="app-cta py-5">
-  <div class="container text-center" data-aos="fade-up">
-    <div class="row justify-content-center">
-      <div class="col-lg-8">
-        <div class="card p-4 shadow-sm" style="background-color: #f8f9fa;">
-          <h3 class="mb-3">Ismerd meg a mobilalkalmazásunkat!</h3>
-          <p class="mb-4">Töltsd le Android alkalmazásunkat a még kényelmesebb pályafoglalásért, vagy regisztrálj weboldalunkon, hogy hozzáférj minden funkcióhoz. Kattints a részletekért!</p>
-          <a class="btn btn-primary" href="/alkalmazas/">Regisztráció és App Letöltése</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-    <!-- RÓLUNK SZEKCIÓ ELŐNÉZET -->
-     <p></p>
-     
-    <section id="about-preview" class="about-preview">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-6">
-                    <img src="/assets/img/gallery/gallery-1.jpg" class="img-fluid rounded" alt="Teniszpálya Nagyvázsonyban">
-                </div>
-                <div class="col-lg-6">
-                    <div class="section-header">
-                        
-                        <h2>A Klubról</h2>
-                        <p>Több mint két évtizedes múltra visszatekintő teniszklubunk Nagyvázsony szívében várja a sport szerelmeseit. Célunk, hogy minden korosztály számára lehetőséget biztosítsunk a mozgásra és a közösségi életre.</p>
-                        <a href="/rolunk/" class="btn btn-outline-primary mt-3">Tudj meg többet rólunk</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-  </main>
+  <main id="main" data-aos="fade" data-aos-delay="1500"></main>
 
   <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
   <div id="preloader"><div class="line"></div></div>
@@ -179,6 +149,11 @@
   <script src="/assets/vendor/glightbox/js/glightbox.min.js"></script>
   <script src="/assets/vendor/aos/aos.js"></script>
   <script src="/assets/js/main.js"></script>
+  <script>
+    window.addEventListener('error', function(event) {
+      console.error('Global error:', event.error);
+    });
+  </script>
   <script type="module" src="/assets/js/main-script.js"></script>
   <script src="/assets/js/weather-advisor.js"></script>
   <script src="/assets/js/chat-widget.js"></script>

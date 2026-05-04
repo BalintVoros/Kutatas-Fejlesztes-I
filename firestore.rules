@@ -1,0 +1,53 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Allow anyone to read public collections
+    match /documents/{document=**} {
+      allow read;
+    }
+    
+    match /gallery_images/{document=**} {
+      allow read;
+    }
+    
+    match /news/{document=**} {
+      allow read;
+    }
+    
+    match /archived_tournaments/{document=**} {
+      allow read;
+    }
+    
+    // Authenticated users can interact with user-specific data
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    match /bookings/{document=**} {
+      allow read, write: if request.auth != null;
+    }
+    
+    match /tournaments/{document=**} {
+      allow read;
+      allow write: if request.auth != null;
+    }
+    
+    match /match_results/{document=**} {
+      allow read;
+      allow write: if request.auth != null;
+    }
+    
+    // Only admins can write to documents, news, gallery
+    match /documents/{document=**} {
+      allow write: if request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.isAdmin == true;
+    }
+    
+    match /gallery_images/{document=**} {
+      allow write: if request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.isAdmin == true;
+    }
+    
+    match /news/{document=**} {
+      allow write: if request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.isAdmin == true;
+    }
+  }
+}

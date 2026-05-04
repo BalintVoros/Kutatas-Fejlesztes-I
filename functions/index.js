@@ -4,23 +4,10 @@ import { defineString } from "firebase-functions/params";
 import { logger } from "firebase-functions";
 import admin from "firebase-admin";
 import nodemailer from "nodemailer";
-import { GoogleGenerativeAI } from "@google/generative-ai"; // ÚJ IMPORT AZ AI-HOZ
+import { GoogleGenerativeAI } from "@google/generative-ai"; 
+const GEMINI_API_KEY = defineString("GEMINI_API_KEY"); 
+const OPENWEATHER_API_KEY = defineString("OPENWEATHER_API_KEY");  
 
-admin.initializeApp();
-
-// --- KÖRNYEZETI VÁLTOZÓK ---
-const GMAIL_EMAIL = defineString("GMAIL_EMAIL");
-const GMAIL_PASS = defineString("GMAIL_PASS");
-const GEMINI_API_KEY = defineString("GEMINI_API_KEY"); // ÚJ: Gemini kulcs
-const OPENWEATHER_API_KEY = defineString("OPENWEATHER_API_KEY"); // ÚJ: Időjárás kulcs
-
-// ============================================================================
-// 1. E-MAIL KÜLDŐ MODULOK (EREDETI KÓD)
-// ============================================================================
-
-/**
- * E-mailt küld új foglaláskor a felhasználónak és az adminnak.
- */
 export const sendBookingConfirmationEmail = onCall({ region: "europe-west1" }, async (request) => {
     logger.info("sendBookingConfirmationEmail (v2) függvény meghívva, adatok:", request.data);
     try {
@@ -67,9 +54,6 @@ export const sendBookingConfirmationEmail = onCall({ region: "europe-west1" }, a
     }
 });
 
-/**
- * E-mailt küld a vendégnek, ha a foglalását jóváhagyták.
- */
 export const sendApprovalEmail = onDocumentUpdated("bookings/{bookingId}", async (event) => {
     const beforeData = event.data.before.data();
     const afterData = event.data.after.data();
@@ -222,14 +206,16 @@ export const askTennisBot = onCall({ region: "europe-west1" }, async (request) =
         Tudásbázis:
         - Klub neve: TCN Vázsony (Nagyvázsony).
         - Nyitvatartás: Minden nap 07:00 - 21:00.
-        - Pályaborítás: Kiváló minőségű salakos pályák (Nagy Pálya és Kis Pálya).
+        - Pályaborítás: Kiváló minőségű salakos pályák (firNagy Pálya és Kis Pálya).
         - Pályafoglalás menete: Foglalni a weboldal "Foglalás" menüpontjában lehet.
         - Edzési tipp (kezdőknek): Fókuszálj az ütő helyes fogására és a lábmunkára. Mindig nézd a labdát!
         - Verseny eredmények az eredményeken belül van feltüntetve. 4 kategóriában vannak eredmények: Felnőtt férfi, Felnőtt női, Páros , Labaszüreti kupa 
         - Az android alkalmazást a weboldalon lehet elérni az alkalmazások menüpont alatt. Az alkalmazásban lehetőség van foglalni, eredményeket nézni, és dokumentumokat elérni.
-        -  Adolf volt a legjobb festő :)
         - A klub e-mail címe: teniszclubnagyvazsony@gmail.com
         - A pálya állapotáról és karbantartásáról a weboldalon lehet tájékozódni a "Pálya állapota" menüpont alatt. Itt friss információkat találhatsz a pályák aktuális állapotáról, karbantartási munkákról és esetleges lezárásokról. Kérjük, mindig ellenőrizd ezt a menüpontot, mielőtt pályafoglalást végzel vagy a klubba látogatsz!
+        - Szia vagy köszönésre: Szia! Miben segíthetek a TCN Vázsony teniszklubbal kapcsolatban?
+        - Eredmény predikcióra: Ha volt már eredményed akkor a profil menüpontban láthatod,hogy milyen esélyeid  vannak!
+        - Hőmérsékletre vonatkozó tanácsokat a főoldalon találhatod meg!
         
 
 
